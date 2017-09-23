@@ -1,0 +1,19 @@
+- if locals != {}
+  - menu = locals 
+  - nav_suffix = menu[:class_suffix]
+  - nav_class = nav_suffix != '' ? 'nav--' + nav_suffix : ''
+  %nav.nav(class='#{nav_class}')
+    - if menu[:menu_items]
+      %ul.nav__list 
+        - menu[:menu_items].each do |item|
+          %li.nav__item
+            %a.nav__link(href='#{item[1][:link]}')
+              = item[0]
+            - if item[1][:subitems]
+              %ul.nav__sublist
+                - item[1][:subitems].each do |subitem|
+                  %li.nav__subitem
+                    %a.nav__link(href='#{subitem[1][:link]}')
+                      = subitem[0]
+- else 
+  add a menu

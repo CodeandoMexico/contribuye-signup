@@ -1,0 +1,635 @@
+/*
+ *      ______  ______
+ *     /  |   |/  |   |
+ *    /   |   |   |   |  MOSTROHOUSE
+ *   /   /|   |  /|   |  mostrohouse.com
+ *  /   / |   | / |   |
+ * /___/  |___|/  |___|
+ *
+ */
+
+$shadow: 0 0 3px rgba(0, 0, 0, .5)
+$color-text: #3d3d3d
+$lighter-text: lighten($color-text, 25%)
+$color-main: #6dc6c0
+$color-comp: darken ($color-main)
+$color-invert: #fff
+$max-width: 960px
+$base-em: 16px
+$colors: (default: transparent)
+$fontsets: (default: sans-serif)
+
+@function em($pxs, $em: $base-em, $parent_em_size:1)
+  $new_px: null
+  @each $px in $pxs 
+    @if $px == 0
+      $new_px: $new_px #{0}
+    @else 
+      $new_px: $new_px #{($px/$em)+em}
+
+  @return $new_px
+
+@function alphacolor($color, $opacity)
+  $opacity: 1 - $opacity
+  $alphacolor: transparentize($color, $opacity)
+  @return $alphacolor
+
+@function get_color($name)
+  @return map-get($colors, $name)
+
+
+@function make_mod($mod, $color, $amount)
+
+  $_mods: (lighten: lighten($color, $amount), darken: darken($color, $amount))
+  @return map-get($_mods, $mod)
+
+
+@mixin color($name, $alpha: 1, $mods: none)
+  $color: get_color($name)
+
+  @if type-of($name) == color 
+    $color: $name 
+
+  @if $alpha != 1
+    $color: alphacolor($color, $alpha) 
+
+  @if length($mods) > 1
+
+    $color: make_mod(nth($mods, 1), $color, nth($mods, 2))
+
+
+  color: $color
+  
+@mixin bgcolor($name: '', $alpha: 1, $mods: none)
+  
+  $color: get_color($name)
+
+  @if type-of($name) == color 
+    $color: $name 
+
+  @if $alpha != 1
+    $color: alphacolor($color, $alpha) 
+
+  @if length($mods) > 1
+
+    $color: make_mod(nth($mods, 1), $color, nth($mods, 2))
+
+  background-color: $color
+
+@mixin font($type)
+  font-family: map-get($fontsets, $type)
+
+
+@mixin gradient-lr($c1, $c2)
+  background: -moz-linear-gradient(left,  $c1 0%, $c2 100%)
+  background: -webkit-gradient(linear, left center, right center, color-stop(0%,$c1), color-stop(100%,$c2))
+  background: -webkit-linear-gradient(left,  $c1 0%, $c2 100%)
+  background: -o-linear-gradient(left,  $c1 0%,$c2 100%)
+  background: -ms-linear-gradient(left,  $c1 0%,$c2 100%)
+  background: linear-gradient(left,  $c1 0%, $c2 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$c1}', endColorstr='#{$c2}',GradientType=1 )
+
+@mixin gradient-tb($c1, $c2)
+  background: -moz-linear-gradient(top,  $c1 0%, $c2 100%)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$c1), color-stop(100%,$c2))
+  background: -webkit-linear-gradient(top,  $c1 0%, $c2 100%)
+  background: -o-linear-gradient(top,  $c1 0%,$c2 100%)
+  background: -ms-linear-gradient(top,  $c1 0%,$c2 100%)
+  background: linear-gradient(to bottom,  $c1 0%, $c2 100%)
+
+@mixin gradient($colors:(), $direction:'vertical')
+  background: #ffa0e6 /* Old browsers */
+  background: -moz-linear-gradient(45deg,  #ffa0e6 0%, #ff0000 65%) /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#ffa0e6), color-stop(65%,#ff0000)) /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg,  #ffa0e6 0%,#ff0000 65%) /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg,  #ffa0e6 0%,#ff0000 65%) /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg,  #ffa0e6 0%,#ff0000 65%) /* IE10+ */
+  background: linear-gradient(45deg,  #ffa0e6 0%,#ff0000 65%)/* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa0e6', endColorstr='#ff0000',GradientType=1 ) /* IE6-9 fallback on horizontal gradient */
+
+@mixin selectable($value)
+  -webkit-user-select: $value
+  -moz-user-select: $value
+  -ms-user-select: $value
+  -o-user-select: $value
+  user-select: $value
+  
+@mixin offset($dir, $amount, $compensate: false)
+  position: relative
+  @if $dir == top
+    top: $amount
+    margin-bottom: $amount
+  @else if $dir == bottom
+    bottom: $amount
+    margin-bottom: amount
+  @else if $dir == left
+    left: $amount
+    @if $compensate != false
+      width: 100%
+      box-sizing: content-box
+      padding-#{$compensate}: abs($amount)
+  @media (max-width:979px)
+    top: auto
+    bottom: auto
+    left: auto
+  @media (max-width:767px)
+    @if $dir == left
+      @if $compensate != false
+        box-sizing: border-box
+        padding-#{$compensate}: inherit 
+  
+@mixin clearfix
+  +after("")
+    display: block
+    height: 0
+    width: 100%
+    clear: both
+    
+@mixin grid($cols: 2, $gutter: 1)
+  $gutters: $cols - 1
+  $gutters_total_width: $gutters*$gutter
+  $cols_width:  (100%-$gutters_total_width)/$cols
+  $gutter: $gutter * 1%
+  
+  width: 100%
+  +clearfix
+
+  & > *:nth-child(n)
+    width: $cols_width
+    margin-left: $gutter
+    float: left
+    clear: none
+
+  & > *:nth-child(#{$cols}n+1)
+    clear: both
+    margin-left: 0
+
+
+
+@mixin collapsable-grid($cols: 2, $gutter: 1, $content-class: '.content')
+  $gutters: $cols - 1
+  $gutters_total_width: $gutters*$gutter
+  $col_width: (100%-$gutters_total_width)/$cols
+  $content_width: (100%/$col_width) * 100%
+
+  width: 100%
+  +clearfix
+  
+  & > *:nth-child(n)
+    width: $col_width
+    margin-left: $gutter+0%
+    float: left
+    clear: none
+  & > *:nth-child(#{$cols}n+1)
+    clear: both
+    margin-left: 0
+  #{$content-class}
+    width: $content_width
+  @for $i from 1 through $cols
+    & > *:nth-child(#{$cols}n + #{$i})
+      // $col_w: 100/$cols
+      $offset: ($i - 1) * ($col_width + $gutter)
+      #{$content-class}
+        // margin-left: 
+        +prefix(transform, translateX(-#{$offset}))
+  
+
+@mixin triangle($size: 10px, $color: #fff, $direction: 'down', $pseudo: '')
+  $selector: ""
+  @if $pseudo != ''
+    $selector: '::'+$pseudo
+
+  &#{$selector}
+
+    width: 0
+    height: 0
+    display: inline-block
+    @if $pseudo != ''
+      content: ''
+    vertical-align: middle
+    @if $direction == 'down'
+      border-left: $size solid transparent
+      border-right: $size solid transparent
+      border-top: $size solid $color
+    @else if $direction == 'up'
+      border-left: $size solid transparent
+      border-right: $size solid transparent
+      border-bottom: $size solid $color
+    @else if $direction == 'left'
+      border-top: $size solid transparent
+      border-right: $size solid $color
+      border-bottom: $size solid transparent
+    @else if $direction == 'right'
+      border-top: $size solid transparent
+      border-left: $size solid $color
+      border-bottom: $size solid transparent
+    @content
+
+@mixin fake-border($dot: ".", $color: #999, $padding: 8px, $spacing: 0px, $position: after)
+  $dots: $dot
+  @for $i from 1 through 500
+    $dots: $dots+$dot
+  &:#{$position}
+    content: $dots
+    display: block
+    font-weight: bold
+    font-family: Arial
+    font-size: 10px
+    height: 10px
+    overflow: hidden
+    color: $color
+    margin-top: $padding - 10
+    letter-spacing: $spacing
+    line-height: 1em!important
+    -webkit-font-smoothing: none
+    @content
+  
+@mixin letter-spacing($amount)
+  letter-spacing: ($amount/1000)+em
+  
+@mixin after($content:"", $ie7: false)
+  &:after
+    content: $content
+    @content   
+@mixin before($content:"", $ie7: false)
+  &:before
+    content: $content
+    @content 
+    
+@mixin placeholder-color($color: #fff)
+  $prefixes: "&::-webkit-input-", "&::-moz-", "&:-ms-input-", "&::-ms-input-" 
+  @each $prefix in $prefixes
+    #{$prefix}placeholder 
+      color: $color 
+    
+@mixin aspect-ratio($width: 1, $height: 1, $ie7: false)
+  $ratio: ($height/$width*100%)
+  @if ie7 == true
+    *zoom: expression(this.runtimeStyle.zoom="1", this.innerHTML="<small class='before'>&nbsp;</small>"+this.innerHTML)
+    .before
+      content: ""
+      display: block
+      padding-top: $ratio
+  &:before 
+    content: ""
+    display: block
+    padding-top: $ratio
+    
+@mixin ratio($a: 1, $b: 1, $width: 100%, $proportional: false)
+  $ratio: ($b/$a*$width)
+  padding-top: $ratio
+  position: relative
+  width: $width
+  & > *:first-child
+    position: absolute
+    top: 0 
+    left: 0
+    @if $proportional == false
+      width: 100%
+      height: 100%
+    @else if $proportional == width 
+      width: auto
+      height: 100%
+    @else if $proportional == height 
+      width: 100%
+      height: auto
+      
+@mixin vertical-align($align)
+  $align_map: (bottom: 100%, middle: 50%, reset: 0%)
+
+  position: relative
+  top: $align
+  
+  -webkit-transform: translateY(-#{$align})
+  -ms-transform: translateY(-#{$align})
+  -moz-transform: translateY(-#{$align})
+  -o-transform: translateY(-#{$align})
+  transform: translateY(-#{$align})
+  @content
+
+
+@mixin headings($exclude: (), $font: "", $weight: bold)
+  h1, h2, h3, h4, h5
+    @if $font != ""
+      font: 
+        family: $font
+        weight: $weight
+    @content
+    @if length($exclude) >= 1
+      @each $selector in $exclude 
+        &:not(#{$selector})
+          &:first-child
+            margin-top: 0
+    @else  
+      &:first-child
+        margin-top: 0 
+
+@mixin fullscreen($position: fixed)
+  position: $position
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  @content
+
+@mixin centered($w)
+  max-width: $w
+  width: 100%
+  margin: 0 auto
+
+@mixin prefix($property, $value)
+  $prefixes: (-webkit-, -moz-, -ms-, -o-)
+
+  @each $prefix in $prefixes
+    #{$prefix}#{$property}: $value
+  #{$property}: $value 
+
+@mixin transform($value)
+  +prefix(transform, $value)
+
+@mixin transition($value)
+  +prefix(transition, $value)
+
+
+@mixin centered-padding($width, $padding: 0)
+  $width: $width/2
+  $top-padding: nth($padding, 1)
+  $right-padding: nth($padding, 1)
+  $bottom-padding: nth($padding, 1)
+  $left-padding: nth($padding, 1)
+  
+  @if length($padding) == 2
+    $top-padding: nth($padding, 1)
+    $right-padding: nth($padding, 2)
+    $bottom-padding: nth($padding, 1)
+    $left-padding: nth($padding, 2)
+  @else if length($padding) == 3
+    $top-padding: nth($padding, 1)
+    $right-padding: nth($padding, 2)
+    $bottom-padding: nth($padding, 3)
+    $left-padding: nth($padding, 2)
+  @else if length($padding) == 4
+    $top-padding: nth($padding, 1)
+    $right-padding: nth($padding, 2)
+    $bottom-padding: nth($padding, 3)
+    $left-padding: nth($padding, 4)
+    
+  $right-total-padding: $width - $right-padding
+  $left-total-padding: $width - $left-padding
+  padding: $top-padding calc(50% - #{$right-total-padding}) $bottom-padding calc(50% - #{$left-total-padding})
+  //padding: $top-padding $right-padding $bottom-padding $left-padding \9  
+
+@mixin ribbonize($dimensions, $color: #000)
+  // usage: +ribbonize(width height tail-height, bg-color)
+  $width: nth($dimensions, 1)
+  $height: nth($dimensions, 1)
+  $tail-height: nth($dimensions, 1) 
+  
+  @if length($dimensions) == 2
+    $width: nth($dimensions, 1)
+    $height: nth($dimensions, 1)
+    $tail-height: nth($dimensions, 2)    
+  background-color: $color
+  position: relative
+  display: block
+  width: $width
+  height: $height
+  +prefix(transition, .5s all)
+  &:after, &.after
+    +prefix(transition, .5s all)  
+  @content
+  +after("")
+    position: absolute
+    top: 100%
+    left: 0
+    width: 0px
+    z-index: -1
+    border-left: $width/2 solid $color
+    border-right: $width/2 solid $color
+    border-bottom: $tail-height solid transparent
+
+@mixin ribbon-tail($dimensions, $color: #000)
+  // usage: +ribbonize(width height tail-height, bg-color)
+  $width: nth($dimensions, 1)
+  $height: nth($dimensions, 1)
+  $tail-depth: $width/4
+  
+  @if length($dimensions) == 2
+    $width: nth($dimensions, 1)
+    $height: nth($dimensions, 2) 
+  @else if length($dimensions) == 3
+    $width: nth($dimensions, 1)
+    $height: nth($dimensions, 2)
+    $tail-depth: nth($dimensions, 3) 
+  //background-color: $color
+  content: ""
+  display: block
+  height: 0
+  width: 0px
+  border-left: $width/2 solid $color
+  border-right: $width/2 solid $color
+  border-top: $height solid $color
+  border-bottom: $tail-depth solid transparent
+@mixin ribbon-tail-color($color)
+  border-left-color: $color
+  border-right-color: $color
+  border-top-color: $color
+  
+@mixin nav($orientation: horizontal)
+  $float: left
+  @if $orientation == vertical
+    $float: none
+    
+  list-style-type: none
+  margin: 0
+  padding: 0
+  +clearfix
+  & > *
+    display: block
+    float: $float
+  @content
+  
+@mixin ribbonize-color($color)
+  background-color: $color
+  &:after, & .after
+    border-left-color: $color
+    border-right-color: $color
+
+@mixin icon($icon-dimensions)
+  $width: nth($icon-dimensions, 1)
+  $height: nth($icon-dimensions, 1)
+  
+  @if length($icon-dimensions) == 2
+    $width: nth($icon-dimensions, 1)
+    $height: nth($icon-dimensions, 2) 
+  
+  width: $width
+  height: 0
+  padding-top: $height
+  padding-bottom: 0
+  overflow: hidden
+  outline: none
+  @content
+
+@mixin ico($dimensions, $options)
+  width: nth($icon-dimensions, 1)
+  $height: nth($icon-dimensions, 1)
+  
+  @if length($icon-dimensions) == 2
+    $width: nth($icon-dimensions, 1)
+    $height: nth($icon-dimensions, 2) 
+  
+  width: $width
+  height: 0
+  padding-top: $height
+  padding-bottom: 0
+  line-height: $height + 1
+  background-color: $bg-color
+  display: block
+  border: none
+  overflow: hidden
+  outline: none
+  @content
+
+
+@mixin box($icon-dimensions, $bg-color: '', $display: inline-block)
+  $width: nth($icon-dimensions, 1)
+  $height: nth($icon-dimensions, 1)
+  
+  @if length($icon-dimensions) == 2
+    $width: nth($icon-dimensions, 1)
+    $height: nth($icon-dimensions, 2) 
+  
+  width: $width
+  height: $height 
+  line-height: $height + 1
+  @if $bg-color != ''
+    background-color: $bg-color
+  display: $display
+  border: none
+  outline: none
+  @content
+
+@mixin ellipse($icon-dimensions)
+  $width: nth($icon-dimensions, 1)
+  $height: nth($icon-dimensions, 1)
+  
+  @if length($icon-dimensions) == 2
+    $width: nth($icon-dimensions, 1)
+    $height: nth($icon-dimensions, 2) 
+  
+  width: $width
+  height: $height 
+  line-height: $height + 1
+  border-radius: 50%
+  @content
+
+
+@mixin sprite($x:0, $y:0, $name: 'i/main-sprite', $format:'.png')
+  $file: $name + $format
+  $file-retina: $name + '@2x' + $format
+  $x: $x * -1
+  $y: $y * -1
+  
+  background-image: url(#{$file})
+  background-repeat: no-repeat
+  background-position: $x $y 
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dppx) 
+    background-image: url(#{$file-retina})
+
+
+@mixin slice($color: #fff, $location: before, $height: 80px, $width: 100vw)
+  position: relative
+  margin-top: $height
+  
+  $a: left
+  $b: top
+  $c: right
+  $d: bottom 
+  
+  @if $location == after
+    $a: right
+    $b: bottom
+    $c: left
+    $d: top 
+  
+  &:#{$location}, .safari-#{$location}
+    content: ''
+    position: absolute
+    #{$a}: 0
+    #{$b}: $height * -1
+    width: 100%
+    display: block
+    border: $height solid $color
+    border-#{$a}-width: 100vw
+    border-#{$b}-color: transparent
+    border-#{$c}: none
+    border-#{$d}: none 
+    +box-sizing(border-box)
+
+@mixin text-inputs
+  input
+    &[type="text"], 
+    &[type="email"], 
+    &[type="password"], 
+    &[type="number"],
+    &[type="tel"]
+      @content
+  textarea
+    @content
+
+@mixin appearance($value: none)
+  -webkit-appearance: $value
+  -moz-appearance: $value
+  appearance: $value
+
+
+@mixin animation($name, $duration: 1s, $iteration: infinite, $ease: linear)
+  @at-root
+    @-webkit-keyframes #{$name}
+      @content
+    @-moz-keyframes
+      @content
+    @keyframes #{$name}
+      @content
+  -webkit-animation: $name $duration $iteration $ease
+  -moz-animation: $name $duration $iteration $ease
+  animation: $name $duration $iteration $ease
+
+@mixin animator($name, $properties)
+  @at-root
+    @-webkit-keyframes #{$name}
+      @content
+    @-moz-keyframes
+      @content
+    @keyframes #{$name}
+      @content
+  -webkit-animation: $name $properties
+  -moz-animation: $name $properties
+  animation: $name $properties
+  
+@mixin wp-admin-bar
+  // ADMIN BAR STUFF
+  #wpadminbar
+    top: -23px!important
+    opacity: .6
+    transition: all .5s
+    &:hover 
+      top: 0!important
+      opacity: 1
+  pre
+    text-align: left
+    font-size: 10px
+  
+  .customize-support
+    position: relative
+    top: -32px
+    margin-bottom: -32px
+
+.hidden
+  display: none
+.text-right  
+  text-align: right
+.text-center
+  text-align: center
+    

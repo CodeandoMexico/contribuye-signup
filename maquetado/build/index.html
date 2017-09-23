@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href='stylesheets/style.css' rel='stylesheet'>
+    <title></title>
+  </head>
+  <body class='bg-dark'>
+    <section></section>
+    <div class='container container--narrow'>
+      <div class='content-box bg-bright'>
+        <h2 class='title title--big color-accent'>
+          Contribuye
+        </h2>
+        <form action='' class='form' method='POST'>
+          <div class='input-group'>
+            <label class='label' for='nombre'>
+              Nombre
+            </label>
+            <input class='input-text' name='nombre' placeholder='Heroe sin capa' type='text'>
+          </div>
+          <div class='input-group'>
+            <label class='label' for='email'>
+              Email
+            </label>
+            <input class='input-text' name='email' placeholder='heroe@ejemplo.mx' type='email'>
+          </div>
+          <div class='input-group'>
+            <label class='label' for='twitter'>
+              Twitter
+            </label>
+            <input class='input-text' name='twitter' placeholder='@codeandomexico' type='text'>
+          </div>
+          <div class='input-group'>
+            <label class='label' for='slack'>
+              Slack
+              <em class='mute'>
+                (en codeandomexico.slack.com)
+              </em>
+            </label>
+            <input class='input-text' name='slack' placeholder='Tu user en slack' type='text'>
+          </div>
+          <div class='input-group'>
+            <p class='pseudo-label' for='intereses'>
+              Habilidades
+            </p>
+            <label class='input-wrapped'>
+              <input name='habilidades' type='checkbox'>
+                Front-end
+              </input>
+            </label>
+            <label class='input-wrapped'>
+              <input name='habilidades' type='checkbox'>
+                Back-end
+              </input>
+            </label>
+            <label class='input-wrapped'>
+              <input name='habilidades' type='checkbox'>
+                Diseño
+              </input>
+            </label>
+          </div>
+          <div class='input-group'>
+            <p class='pseudo-label' for='intereses'>
+              Intereses
+            </p>
+            <label class='input-wrapped'>
+              <input name='intereses' type='checkbox'>
+                Front-end
+              </input>
+            </label>
+            <label class='input-wrapped'>
+              <input name='intereses' type='checkbox'>
+                Back-end
+              </input>
+            </label>
+            <label class='input-wrapped'>
+              <input name='intereses' type='checkbox'>
+                Diseño
+              </input>
+            </label>
+          </div>
+          <div class='input-group'>
+            <p class='pseudo-label' for='slack'>
+              Disponibilidad
+            </p>
+            <label class='input-wrapped input-wrapped--block'>
+              <input name='disponibilidad' type='radio'>
+              Baja (0-2 horas al día)
+            </label>
+            <label class='input-wrapped input-wrapped--block'>
+              <input name='disponibilidad' type='radio'>
+              Media (2-4 horas al día)
+            </label>
+            <label class='input-wrapped input-wrapped--block'>
+              <input name='disponibilidad' type='radio'>
+              Alta (4+ horas al día)
+            </label>
+          </div>
+          <div class='form__footer'>
+            <input class='btn btn--action' type='submit' value='Enviar'>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

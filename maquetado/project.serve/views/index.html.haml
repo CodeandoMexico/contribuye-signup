@@ -1,0 +1,73 @@
+%section
+.container.container--narrow
+  .content-box.bg-bright 
+    %h2.title.title--big.color-accent
+      %img.align-middle.logo-title(src='images/logotype--accent.svg')
+      Contribuye 
+    %form.form(action='' method='POST')
+      .input-group 
+        %label.label(for='nombre')
+          Nombre 
+        %input.input-text(type='text' name='nombre' placeholder='Heroe sin capa')
+      .input-group 
+        %label.label(for='email')
+          Email 
+        %input.input-text(type='email' name='email' placeholder='heroe@ejemplo.mx')
+      .input-group 
+        %label.label(for='twitter')
+          Twitter 
+        %input.input-text(type='text' name='twitter' placeholder='@codeandomexico')
+      .input-group 
+        %label.label(for='slack')
+          Slack 
+          %em.mute
+            (en codeandomexico.slack.com)
+        %input.input-text(type='text' name='slack' placeholder='Tu user en slack')
+      .input-group 
+        %p.pseudo-label(for='intereses')
+          Habilidades 
+        %label.input-wrapped
+          %input(type='checkbox' name='habilidades')
+            Front-end 
+        %label.input-wrapped
+          %input(type='checkbox' name='habilidades')
+            Back-end 
+        %label.input-wrapped
+          %input(type='checkbox' name='habilidades')
+            Diseño 
+      .input-group 
+        %p.pseudo-label(for='intereses')
+          Intereses 
+        %label.input-wrapped
+          %input(type='checkbox' name='intereses')
+            Front-end 
+        %label.input-wrapped
+          %input(type='checkbox' name='intereses')
+            Back-end 
+        %label.input-wrapped
+          %input(type='checkbox' name='intereses')
+            Diseño
+
+      .input-group 
+        %p.pseudo-label(for='slack')
+          Disponibilidad
+        %label.input-wrapped.input-wrapped--block
+          %input(type='radio' name='disponibilidad')
+          Baja (0-2 horas al día)
+      
+        %label.input-wrapped.input-wrapped--block
+          %input(type='radio' name='disponibilidad')
+          Media (2-4 horas al día)
+      
+        %label.input-wrapped.input-wrapped--block
+          %input(type='radio' name='disponibilidad')
+          Alta (4+ horas al día)
+
+      .form__footer
+        %input.btn.btn--action(type='submit' value='Enviar')
+
+
+
+
+
+

@@ -1,0 +1,171 @@
+/*      ______  ______
+ *     /  |   |/  |   |
+ *    /   |   |   |   |  MOSTROHOUSE
+ *   /   /|   |  /|   |  mostrohouse.com
+ *  /   / |   | / |   |
+ * /___/  |___|/  |___|
+ *
+ */
+.hidden {
+  display: none;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "Helvetica", sans-serif;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
+}
+.container--narrow {
+  max-width: 800px;
+}
+
+.content-box {
+  padding: 3rem 2.2rem;
+  margin: 1em 0;
+}
+
+.title {
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+.title--big {
+  font-size: 3rem;
+}
+
+.text-big {
+  font-size: 1.3rem;
+}
+
+.label,
+.pseudo-label {
+  font-weight: 600;
+  display: block;
+}
+
+.input-group {
+  font-size: 1.3rem;
+  margin-bottom: 1.5em;
+}
+
+.input-text {
+  margin-top: 0.5em;
+  width: 100%;
+  height: 2.5em;
+  font-size: inherit;
+  padding: 0 10px;
+  border-radius: 7px;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+.input-text:focus {
+  outline: none;
+  border-color: #f3476d;
+}
+
+.mute {
+  opacity: 0.5;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+.input-wrapped {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  margin-bottom: 1em;
+}
+.input-wrapped--block {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.bg-accent {
+  background-color: #f3476d;
+}
+
+.bg-dark {
+  background-color: #000;
+}
+
+.bg-bright {
+  background-color: #fff;
+}
+
+.color-accent {
+  color: #f3476d;
+}
+
+.color-dark {
+  color: #000;
+}
+
+.color-bright {
+  color: #fff;
+}
+
+.form {
+  margin-bottom: 5rem;
+}
+.form__footer {
+  margin-top: 6rem;
+  text-align: center;
+}
+
+.btn {
+  font-size: 1.2rem;
+  font-family: "Helvetica", sans-serif;
+  font-weight: bold;
+  border: none;
+  padding: 1em 3em;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.btn--action {
+  background-color: #f3476d;
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .content-box {
+    padding: 4rem 5rem;
+  }
+
+  .input-group {
+    margin-bottom: 2em;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
